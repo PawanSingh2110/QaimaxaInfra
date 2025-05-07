@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import banner from "../../assets/bgbanner.jpg";
-import { motion } from "framer-motion";
+import React from 'react';
+import banner from '../../assets/bgbanner.jpg';
+import { motion } from 'framer-motion';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -8,71 +8,7 @@ const fadeInUp = {
 };
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
-  const [status, setStatus] = useState("");
-  const [formError, setFormError] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormError("");
   
-    const { name, email, subject, message } = formData;
-  
-    // Basic validation
-    if (!name || !email || !subject || !message) {
-      setFormError("All fields are required.");
-      return;
-    }
-  
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setFormError("Please enter a valid email address.");
-      return;
-    }
-  
-    setStatus("Sending...");
-  
-    try {
-      const response = await fetch("/api/contact", {  // Call the serverless function
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          subject,
-          message,
-        }),
-      });
-  
-      const data = await response.json();
-  
-      if (data.message === "Message sent successfully!") {
-        setStatus("Message sent successfully!");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        setStatus("There was an error. Please try again.");
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
-      setStatus("There was a problem submitting the form.");
-    }
-  };
 
   return (
     <div>
@@ -134,7 +70,7 @@ const Contact = () => {
           className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           variants={fadeInUp}
         >
-          {/* Map */}
+          {/* Map with Zoom-In Animation */}
           <motion.div
             className="relative w-full h-[450px] md:h-96"
             initial={{ scale: 0.8, opacity: 0 }}
@@ -152,9 +88,8 @@ const Contact = () => {
             ></iframe>
           </motion.div>
 
-          {/* Form */}
+          {/* Contact Form with Slide-In */}
           <motion.form
-            onSubmit={handleSubmit}
             className="space-y-4"
             initial={{ x: 100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
@@ -166,8 +101,6 @@ const Contact = () => {
                 name="name"
                 placeholder="Your Name"
                 required
-                value={formData.name}
-                onChange={handleChange}
                 className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500"
               />
               <input
@@ -175,42 +108,27 @@ const Contact = () => {
                 name="email"
                 placeholder="Your Email"
                 required
-                value={formData.email}
-                onChange={handleChange}
                 className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500"
               />
             </div>
-
             <input
               type="text"
               name="subject"
               placeholder="Subject"
-              required
-              value={formData.subject}
-              onChange={handleChange}
               className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500"
             />
-
             <textarea
               name="message"
               placeholder="Message"
               rows="5"
-              required
-              value={formData.message}
-              onChange={handleChange}
               className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 resize-none"
             ></textarea>
-
             <button
               type="submit"
               className="w-full sm:w-auto bg-black text-white hover:text-black hover:border-black border-[1px] px-6 py-3 rounded-2xl shadow hover:bg-gray-400 transition duration-75"
             >
-              {status || "Send Message"}
+              Send Message
             </button>
-
-            {formError && (
-              <p className="text-red-600 text-center font-medium mt-2">{formError}</p>
-            )}
           </motion.form>
         </motion.div>
       </motion.div>
