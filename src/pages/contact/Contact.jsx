@@ -47,32 +47,25 @@ const Contact = () => {
     setStatus("Sending...");
   
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
+      const response = await fetch('/api/contact', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          access_key: "e88c2c5d-6af0-4ac0-b100-d59d771ef623",
-          name,
-          email,
-          subject,
-          message,
-        }),
+        body: JSON.stringify({ name, email, subject, message }),
       });
   
       const data = await response.json();
-      console.log("Web3Forms response:", data); // 🔍 Debugging line added here
+      console.log(data);
   
-      if (data.success) {
+      if (data.message === "Message sent successfully!") {
         setStatus("Message sent successfully!");
         setFormData({ name: "", email: "", subject: "", message: "" });
-        setTimeout(() => window.location.reload(), 5000);
       } else {
         setStatus("There was an error. Please try again.");
       }
     } catch (error) {
-      console.error("Submission error:", error); // 🔍 Catch network or fetch errors
+      console.error("Submission error:", error);
       setStatus("There was a problem submitting the form.");
     }
   };
