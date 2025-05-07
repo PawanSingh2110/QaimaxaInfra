@@ -28,10 +28,10 @@ const WhyGaamUP = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: false }}
         >
-          <span className="text-black">Why</span>{" "}
           <span className="text-black">
             QAIMAXA INFRA
-          </span>
+          </span>{" "}
+          <span className="text-black">Advantage </span>
         </motion.h2>
 
         {/* Features Grid */}

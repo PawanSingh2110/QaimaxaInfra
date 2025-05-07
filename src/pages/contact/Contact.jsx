@@ -29,45 +29,51 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError("");
-
+  
     const { name, email, subject, message } = formData;
-
+  
     // Basic validation
     if (!name || !email || !subject || !message) {
       setFormError("All fields are required.");
       return;
     }
-
+  
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setFormError("Please enter a valid email address.");
       return;
     }
-
+  
     setStatus("Sending...");
-
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        access_key: "e88c2c5d-6af0-4ac0-b100-d59d771ef623",
-        name,
-        email,
-        subject,
-        message,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      setStatus("Message sent successfully!");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => window.location.reload(), 2000);
-    } else {
-      setStatus("There was an error. Please try again.");
+  
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "e88c2c5d-6af0-4ac0-b100-d59d771ef623",
+          name,
+          email,
+          subject,
+          message,
+        }),
+      });
+  
+      const data = await response.json();
+      console.log("Web3Forms response:", data); // 🔍 Debugging line added here
+  
+      if (data.success) {
+        setStatus("Message sent successfully!");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => window.location.reload(), 5000);
+      } else {
+        setStatus("There was an error. Please try again.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error); // 🔍 Catch network or fetch errors
+      setStatus("There was a problem submitting the form.");
     }
   };
 
