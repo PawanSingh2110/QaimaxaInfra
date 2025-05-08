@@ -65,7 +65,7 @@ const Contact = () => {
     if (data.success) {
       setStatus("Message sent successfully!");
       setFormData({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => setStatus(""), 1000); // ✅ no page reload
+      setTimeout(() => setStatus(""), 5000); // ✅ no page reload
     } else {
       setStatus("There was an error. Please try again.");
     }
