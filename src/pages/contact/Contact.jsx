@@ -58,7 +58,6 @@ const Contact = () => {
         subject,
         message,
       }),
-      
     });
 
     const data = await response.json();
@@ -66,7 +65,7 @@ const Contact = () => {
     if (data.success) {
       setStatus("Message sent successfully!");
       setFormData({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => window.location.reload(), 500);
+      setTimeout(() => setStatus(""), 1000); // ✅ no page reload
     } else {
       setStatus("There was an error. Please try again.");
     }
@@ -106,19 +105,28 @@ const Contact = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
           variants={fadeInUp}
         >
-          <motion.div className="bg-white shadow-lg p-6 rounded-2xl text-center" variants={fadeInUp}>
+          <motion.div
+            className="bg-white shadow-lg p-6 rounded-2xl text-center"
+            variants={fadeInUp}
+          >
             <div className="text-pink-500 text-4xl mb-2">📍</div>
             <h3 className="text-lg font-semibold mb-2">Our Location</h3>
             <p>Mumbai, Navi Mumbai</p>
           </motion.div>
 
-          <motion.div className="bg-white shadow-lg p-6 rounded-2xl text-center" variants={fadeInUp}>
+          <motion.div
+            className="bg-white shadow-lg p-6 rounded-2xl text-center"
+            variants={fadeInUp}
+          >
             <div className="text-pink-500 text-4xl mb-2">✉️</div>
             <h3 className="text-lg font-semibold mb-2">Email Us</h3>
             <p className="break-words">info@Qaimaxainfra.com</p>
           </motion.div>
 
-          <motion.div className="bg-white shadow-lg p-6 rounded-2xl text-center" variants={fadeInUp}>
+          <motion.div
+            className="bg-white shadow-lg p-6 rounded-2xl text-center"
+            variants={fadeInUp}
+          >
             <div className="text-pink-500 text-4xl mb-2">📞</div>
             <h3 className="text-lg font-semibold mb-2">Call Us</h3>
             <p className="break-words">
@@ -207,7 +215,9 @@ const Contact = () => {
             </button>
 
             {formError && (
-              <p className="text-red-600 text-center font-medium mt-2">{formError}</p>
+              <p className="text-red-600 text-center font-medium mt-2">
+                {formError}
+              </p>
             )}
           </motion.form>
         </motion.div>
