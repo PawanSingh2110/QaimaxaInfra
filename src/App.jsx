@@ -15,7 +15,6 @@ function App() {
     <>
       <div>
         {/* Show Navbar on all pages except '/about' */}
-        {location.pathname !== '/about' && <Navbar />}
 
         <ScrollToTop/>
 
