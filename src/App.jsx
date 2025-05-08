@@ -15,6 +15,7 @@ function App() {
     <>
       <div>
         {/* Show Navbar on all pages except '/about' */}
+        <Navbar/>
 
         <ScrollToTop/>
 
